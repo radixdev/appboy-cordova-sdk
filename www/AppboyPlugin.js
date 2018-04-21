@@ -373,4 +373,9 @@ AppboyPlugin.prototype['CardCategories'] = {
   "ALL" : 'all'
 };
 
+// Add iosShowPushPrompt via JS function
+AppboyPlugin.prototype.iosShowPushPrompt = function () {
+	cordova.exec(null, null, "AppboyPlugin", "iosShowPushPrompt", []);
+}
+
 module.exports = new AppboyPlugin();
