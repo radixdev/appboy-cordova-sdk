@@ -31,7 +31,7 @@
 
 - (void)didFinishLaunchingListener:(NSNotification *)notification {
   NSMutableDictionary *appboyLaunchOptions = [@{ABKSDKFlavorKey : @(CORDOVA)} mutableCopy];
-  
+
   // Add the endpoint only if it's non nil
   if (self.apiEndpoint != nil) {
     [appboyLaunchOptions setValue:self forKey: ABKAppboyEndpointDelegateKey];
@@ -42,7 +42,7 @@
         withLaunchOptions:notification.userInfo
         withAppboyOptions:appboyLaunchOptions];
 
-  if (![self.disableAutomaticPushRegistration isEqualToString:@"YES"]) {
+  - (void)iosShowPushPrompt:(CDVInvokedUrlCommand *)command {
     UIUserNotificationType notificationSettingTypes = (UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound);
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_x_Max) {
       UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
@@ -51,9 +51,9 @@
         center.delegate = [UIApplication sharedApplication].delegate;
       }
       [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge)
-                            completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                              NSLog(@"Permission granted.");
-      }];
+        completionHandler:^(BOOL granted, NSError * _Nullable error) {
+          NSLog(@"Permission granted.");
+        }];
       [[UIApplication sharedApplication] registerForRemoteNotifications];
     } else if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
       UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationSettingTypes categories:nil];
